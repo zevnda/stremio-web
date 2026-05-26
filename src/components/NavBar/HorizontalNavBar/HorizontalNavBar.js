@@ -11,6 +11,7 @@ const NavMenu = require('./NavMenu');
 const styles = require('./styles');
 
 const HorizontalNavBar = React.memo(({ className, route, query, title, backButton, searchBar, videoScale, videoScaleLabel, onVideoScaleChanged, navMenu, hdrInfo, ...props }) => {
+    const hideButton = true;
     const backButtonOnClick = React.useCallback(() => {
         window.history.back();
     }, []);
@@ -59,7 +60,7 @@ const HorizontalNavBar = React.memo(({ className, route, query, title, backButto
                         null
                 }
                 {
-                    videoScale !== undefined ?
+                    !hideButton && videoScale !== undefined ?
                         <Button className={styles['button-container']} title={videoScaleLabel} tabIndex={-1} onClick={onVideoScaleChanged}>
                             <Icon className={styles['icon']} name={'scale'} />
                         </Button>

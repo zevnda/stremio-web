@@ -50,5 +50,5 @@ jobs:
           publish_dir: ./build
           # in stremio, we use `feat/features-name` or `fix/this-bug`
           # so we need a recursive creation of the destination dir
-          destination_dir: ${{ github.head_ref || github.ref_name }}
+          destination_dir: ./
           allow_empty_commit: true

@@ -1,7 +1,7 @@
-import React, { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { ChangeEvent, forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCore } from 'stremio/core';
-import { Button } from 'stremio/components';
+import { Button, TextInput } from 'stremio/components';
 import { usePlatform, useToast } from 'stremio/common';
 import { Section, Option, Link } from '../components';
 import User from './User';
@@ -20,11 +20,25 @@ const General = forwardRef<HTMLDivElement, Props>(({ profile }: Props, ref) => {
     const [dataExport, loadDataExport] = useDataExport();
 
     const [traktAuthStarted, setTraktAuthStarted] = useState(false);
+    const [tmdbKey, setTmdbKey] = useState(() => localStorage.getItem('tmdbApiKey') ?? '');
 
     const isTraktAuthenticated = useMemo(() => {
         const trakt = profile?.auth?.user?.trakt;
         return trakt && (Date.now() / 1000) < (trakt.created_at + trakt.expires_in);
     }, [profile.auth]);
+
+    const onTmdbKeyChange = useCallback(({ target }: ChangeEvent<HTMLInputElement>) => {
+        setTmdbKey(target.value);
+    }, []);
+
+    const onTmdbKeySave = useCallback(() => {
+        const trimmed = tmdbKey.trim();
+        if (trimmed) {
+            localStorage.setItem('tmdbApiKey', trimmed);
+        } else {
+            localStorage.removeItem('tmdbApiKey');
+        }
+    }, [tmdbKey]);
 
     const onExportData = useCallback(() => {
         loadDataExport();
@@ -133,6 +147,17 @@ const General = forwardRef<HTMLDivElement, Props>(({ profile }: Props, ref) => {
                 <Button className={'button'} title={isTraktAuthenticated ? t('LOG_OUT') : t('SETTINGS_TRAKT_AUTHENTICATE')} disabled={profile.auth === null} tabIndex={-1} onClick={onToggleTrakt}>
                     {isTraktAuthenticated ? t('LOG_OUT') : t('SETTINGS_TRAKT_AUTHENTICATE')}
                 </Button>
+            </Option>
+            <Option label={'TMDB API Key'}>
+                <TextInput
+                    className={styles['tmdb-input']}
+                    type={'password'}
+                    value={tmdbKey}
+                    placeholder={'Enter your TMDB API key'}
+                    onChange={onTmdbKeyChange}
+                    onBlur={onTmdbKeySave}
+                    onSubmit={onTmdbKeySave}
+                />
             </Option>
         </Section>
     </>;

@@ -16,6 +16,8 @@ const META_LINK_CATEGORY = 'meta';
 const IMDB_LINK_CATEGORY = 'imdb';
 const SHARE_LINK_CATEGORY = 'share';
 const WRITERS_LINK_CATEGORY = 'Writers';
+const CAST_LINK_CATEGORY = 'Cast';
+const DIRECTORS_LINK_CATEGORY = 'Directors';
 const TYPE_PRIORITIES = {
     movie: 10,
     series: 9,
@@ -138,6 +140,8 @@ module.exports = {
     IMDB_LINK_CATEGORY,
     SHARE_LINK_CATEGORY,
     WRITERS_LINK_CATEGORY,
+    CAST_LINK_CATEGORY,
+    DIRECTORS_LINK_CATEGORY,
     TYPE_PRIORITIES,
     ICON_FOR_TYPE,
     MIME_SIGNATURES,

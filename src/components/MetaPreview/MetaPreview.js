@@ -192,6 +192,7 @@ const MetaPreview = React.forwardRef(({ className, compact, name, logo, backgrou
                                 className={styles['meta-links']}
                                 label={category}
                                 links={linksGroups.get(category)}
+                                showImages={category === CONSTANTS.CAST_LINK_CATEGORY || category === CONSTANTS.DIRECTORS_LINK_CATEGORY}
                             />
                         ))
                 }

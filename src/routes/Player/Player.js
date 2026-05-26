@@ -22,7 +22,6 @@ const OptionsMenu = require('./OptionsMenu');
 const SubtitlesMenu = require('./SubtitlesMenu');
 const { default: AudioMenu } = require('./AudioMenu');
 const SpeedMenu = require('./SpeedMenu');
-const { default: SideDrawerButton } = require('./SideDrawerButton');
 const { default: SideDrawer } = require('./SideDrawer');
 const usePlayer = require('./usePlayer');
 const useStatistics = require('./useStatistics');
@@ -847,15 +846,6 @@ const Player = ({ urlParams, queryParams }) => {
                 onMouseMove={onBarMouseMove}
                 onMouseOver={onBarMouseMove}
             />
-            {
-                player.metaItem?.type === 'Ready' ?
-                    <SideDrawerButton
-                        className={classnames(styles['layer'], styles['side-drawer-button-layer'])}
-                        onClick={toggleSideDrawer}
-                    />
-                    :
-                    null
-            }
             <ControlBar
                 ref={controlBarRef}
                 className={classnames(styles['layer'], styles['control-bar-layer'])}

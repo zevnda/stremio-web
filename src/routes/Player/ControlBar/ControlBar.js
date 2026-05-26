@@ -179,6 +179,14 @@ const ControlBar = React.forwardRef(({
                             null
                     }
                     {
+                        metaItem?.type === 'Ready' ?
+                            <Button className={styles['control-bar-button']} tabIndex={-1} onClick={onToggleSideDrawer}>
+                                <Icon className={styles['icon']} name={'about'} />
+                            </Button>
+                            :
+                            null
+                    }
+                    {
                         fullscreenSupported ?
                             <Button className={styles['control-bar-button']} title={fullscreen ? t('EXIT_FULLSCREEN') : t('ENTER_FULLSCREEN')} tabIndex={-1} onClick={fullscreen ? exitFullscreen : requestFullscreen}>
                                 <Icon className={styles['icon']} name={fullscreen ? 'minimize' : 'maximize'} />

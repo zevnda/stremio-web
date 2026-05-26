@@ -6945,6 +6945,19 @@ html.active-slider-within-NcgYf{cursor:grabbing}html.active-slider-within-NcgYf 
   color: var(--primary-foreground-color);
   opacity: 0.9;
 }
+.seek-bar-container-JGGTa .time-tooltip-eE7zo {
+  position: fixed;
+  transform: translate(-50%, calc(-100% - 0.5rem));
+  background-color: rgba(0, 0, 0, 0.75);
+  color: var(--primary-foreground-color);
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1000;
+}
 .seek-bar-container-JGGTa .slider-hBDOf {
   flex: 1;
   align-self: stretch;

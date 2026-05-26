@@ -10,6 +10,7 @@ const SeekBar = require('./SeekBar');
 const VolumeSlider = require('./VolumeSlider');
 const styles = require('./styles');
 const { useBinaryState, usePlatform } = require('stremio/common');
+const { useFullscreen } = require('stremio/common/Fullscreen');
 const { t } = require('i18next');
 
 const ControlBar = React.forwardRef(({
@@ -39,15 +40,13 @@ const ControlBar = React.forwardRef(({
     onToggleSpeedMenu,
     onToggleSideDrawer,
     onToggleOptionsMenu,
-    videoScale,
-    videoScaleLabel,
-    onVideoScaleChanged,
     onToggleStatisticsMenu,
     onTouchEnd,
     ...props
 }, ref) => {
     const { chromecast } = useServices();
     const platform = usePlatform();
+    const [fullscreen, requestFullscreen, exitFullscreen, , fullscreenSupported] = useFullscreen();
     const [chromecastServiceActive, setChromecastServiceActive] = React.useState(() => chromecast.active);
     const [buttonsMenuOpen, , , toggleButtonsMenu] = useBinaryState(false);
     const onSubtitlesButtonMouseDown = React.useCallback((event) => {
@@ -179,9 +178,14 @@ const ControlBar = React.forwardRef(({
                             :
                             null
                     }
-                    <Button className={classnames(styles['control-bar-button'], { 'disabled': videoScale === null })} title={videoScaleLabel} tabIndex={-1} onClick={onVideoScaleChanged}>
-                        <Icon className={styles['icon']} name={'scale'} />
-                    </Button>
+                    {
+                        fullscreenSupported ?
+                            <Button className={styles['control-bar-button']} title={fullscreen ? t('EXIT_FULLSCREEN') : t('ENTER_FULLSCREEN')} tabIndex={-1} onClick={fullscreen ? exitFullscreen : requestFullscreen}>
+                                <Icon className={styles['icon']} name={fullscreen ? 'minimize' : 'maximize'} />
+                            </Button>
+                            :
+                            null
+                    }
                     <Button className={classnames(styles['control-bar-button'], { 'disabled': !stream })} tabIndex={-1} onMouseDown={onOptionsButtonMouseDown} onClick={onToggleOptionsMenu}>
                         <Icon className={styles['icon']} name={'more-horizontal'} />
                     </Button>
@@ -200,9 +204,6 @@ ControlBar.propTypes = {
     volume: PropTypes.number,
     muted: PropTypes.bool,
     playbackSpeed: PropTypes.number,
-    videoScale: PropTypes.string,
-    videoScaleLabel: PropTypes.string,
-    onVideoScaleChanged: PropTypes.func,
     subtitlesTracks: PropTypes.array,
     audioTracks: PropTypes.array,
     metaItem: PropTypes.object,

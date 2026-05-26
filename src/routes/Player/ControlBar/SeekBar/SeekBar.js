@@ -14,6 +14,9 @@ const SeekBar = ({ className, time, duration, buffered, onSeekRequested }) => {
     const disabled = time === null || isNaN(time) || duration === null || isNaN(duration);
     const routeFocused = useRouteFocused();
     const [seekTime, setSeekTime] = React.useState(null);
+    const containerRef = React.useRef(null);
+    const [tooltipTime, setTooltipTime] = React.useState(null);
+    const [tooltipPos, setTooltipPos] = React.useState({ x: 0, y: 0 });
 
     const [remainingTimeMode,,, toggleRemainingTimeMode] = useBinaryState(false);
     const resetTimeDebounced = React.useCallback(debounce(() => {
@@ -30,6 +33,16 @@ const SeekBar = ({ className, time, duration, buffered, onSeekRequested }) => {
             onSeekRequested(time);
         }
     }, [onSeekRequested]);
+    const onSliderHover = React.useCallback((value, clientX) => {
+        setTooltipTime(value);
+        if (containerRef.current) {
+            const { top } = containerRef.current.getBoundingClientRect();
+            setTooltipPos({ x: clientX, y: top });
+        }
+    }, []);
+    const onSliderHoverEnd = React.useCallback(() => {
+        setTooltipTime(null);
+    }, []);
     React.useLayoutEffect(() => {
         if (!routeFocused || disabled) {
             resetTimeDebounced.cancel();
@@ -42,8 +55,13 @@ const SeekBar = ({ className, time, duration, buffered, onSeekRequested }) => {
         };
     }, []);
     return (
-        <div className={classnames(className, styles['seek-bar-container'], { 'active': seekTime !== null })}>
+        <div ref={containerRef} className={classnames(className, styles['seek-bar-container'], { 'active': seekTime !== null })}>
             <div className={styles['label']}>{formatTime(seekTime !== null ? seekTime : time)}</div>
+            {tooltipTime !== null && seekTime === null && (
+                <div className={styles['time-tooltip']} style={{ left: tooltipPos.x, top: tooltipPos.y }}>
+                    {formatTime(tooltipTime)}
+                </div>
+            )}
             <Slider
                 className={classnames(styles['slider'], { 'active': seekTime !== null })}
                 value={
@@ -58,6 +76,8 @@ const SeekBar = ({ className, time, duration, buffered, onSeekRequested }) => {
                 disabled={disabled}
                 onSlide={onSlide}
                 onComplete={onComplete}
+                onHover={onSliderHover}
+                onHoverEnd={onSliderHoverEnd}
             />
             <Button onClick={toggleRemainingTimeMode} tabIndex={-1}>
                 <div className={styles['label']}>

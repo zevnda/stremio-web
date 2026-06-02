@@ -139,6 +139,20 @@
             transition: opacity 0.1s ease-in;
             cursor: pointer;
 
+            &.in-library {
+                opacity: 1;
+                background-color: var(--primary-accent-color);
+
+                .library-icon {
+                    color: var(--primary-foreground-color);
+                    opacity: 1;
+                }
+
+                .library-icon-backdrop {
+                    display: none;
+                }
+            }
+
             .library-icon {
                 z-index: 1;
                 position: relative;

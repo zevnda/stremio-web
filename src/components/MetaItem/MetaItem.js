@@ -81,7 +81,7 @@ const MetaItem = React.memo(({ className, type, name, poster, posterShape, poste
                 }
                 {
                     onLibraryClick ?
-                        <div title={inLibrary ? t('REMOVE_FROM_LIB') : t('ADD_TO_LIB')} className={styles['library-icon-layer']} onClick={libraryOnClick}>
+                        <div title={inLibrary ? t('REMOVE_FROM_LIB') : t('ADD_TO_LIB')} className={classnames(styles['library-icon-layer'], { [styles['in-library']]: inLibrary })} onClick={libraryOnClick}>
                             <Icon className={styles['library-icon']} name={inLibrary ? 'remove-from-library' : 'add-to-library'} />
                             <div className={styles['library-icon-backdrop']} />
                         </div>

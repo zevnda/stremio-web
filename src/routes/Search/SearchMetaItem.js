@@ -5,8 +5,9 @@ const PropTypes = require('prop-types');
 const { useCore } = require('stremio/core');
 const MetaItem = require('stremio/components/MetaItem');
 
-const SearchMetaItem = ({ _id, inLibrary, className, ...itemProps }) => {
+const SearchMetaItem = ({ _id, inLibrary: inLibraryProp, className, ...itemProps }) => {
     const core = useCore();
+    const [inLibrary, setInLibrary] = React.useState(!!inLibraryProp);
 
     const itemDataRef = React.useRef(null);
     itemDataRef.current = { _id, ...itemProps };
@@ -20,6 +21,7 @@ const SearchMetaItem = ({ _id, inLibrary, className, ...itemProps }) => {
                     args: _id
                 }
             });
+            setInLibrary(false);
         } else {
             core.transport.dispatch({
                 action: 'Ctx',
@@ -28,6 +30,7 @@ const SearchMetaItem = ({ _id, inLibrary, className, ...itemProps }) => {
                     args: itemDataRef.current
                 }
             });
+            setInLibrary(true);
         }
     }, [_id, inLibrary]);
 

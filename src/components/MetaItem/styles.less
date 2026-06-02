@@ -30,6 +30,10 @@
                 opacity: 1;
             }
 
+            .library-icon-layer {
+                opacity: 1;
+            }
+
             .poster-image-layer {
                 transform: scale(1.05);
             }
@@ -116,6 +120,43 @@
                 left: 0;
                 right: 0;
                 background-color: var(--primary-background-color);
+                opacity: 0.6;
+            }
+        }
+
+        .library-icon-layer {
+            z-index: -2;
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 1.5rem;
+            width: 1.5rem;
+            border-radius: 100%;
+            opacity: 0;
+            transition: opacity 0.1s ease-in;
+            cursor: pointer;
+
+            .library-icon {
+                z-index: 1;
+                position: relative;
+                height: 1.25rem;
+                width: 1.25rem;
+                color: var(--primary-foreground-color);
+                opacity: 0.8;
+            }
+
+            .library-icon-backdrop {
+                z-index: 0;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: var(--primary-background-color);
+                border-radius: 100%;
                 opacity: 0.6;
             }
         }

@@ -7,7 +7,8 @@ const debounce = require('lodash.debounce');
 const useTranslate = require('stremio/common/useTranslate');
 const { default: Icon } = require('@stremio/stremio-icons/react');
 const { withCoreSuspender, getVisibleChildrenRange } = require('stremio/common');
-const { Image, MainNavBars, MetaItem, MetaRow } = require('stremio/components');
+const { Image, MainNavBars, MetaRow } = require('stremio/components');
+const SearchMetaItem = require('./SearchMetaItem');
 const useSearch = require('./useSearch');
 const styles = require('./styles');
 
@@ -92,7 +93,7 @@ const Search = ({ queryParams }) => {
                                                 key={index}
                                                 className={classnames(styles['search-row'], styles[`search-row-${catalog.content.content[0].posterShape}`], 'animation-fade-in')}
                                                 catalog={catalog}
-                                                itemComponent={MetaItem}
+                                                itemComponent={SearchMetaItem}
                                             />
                                         );
                                     }

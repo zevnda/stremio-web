@@ -13,7 +13,7 @@ const useBinaryState = require('stremio/common/useBinaryState');
 const { ICON_FOR_TYPE } = require('stremio/common/CONSTANTS');
 const styles = require('./styles');
 
-const MetaItem = React.memo(({ className, type, name, poster, posterShape, posterChangeCursor, progress, newVideos, options, deepLinks, dataset, optionOnSelect, onDismissClick, onPlayClick, watched, ...props }) => {
+const MetaItem = React.memo(({ className, type, name, poster, posterShape, posterChangeCursor, progress, newVideos, options, deepLinks, dataset, optionOnSelect, onDismissClick, onPlayClick, onLibraryClick, inLibrary, watched, ...props }) => {
     const { t } = useTranslation();
     const [menuOpen, onMenuOpen, onMenuClose] = useBinaryState(false);
     const href = React.useMemo(() => {
@@ -41,6 +41,12 @@ const MetaItem = React.memo(({ className, type, name, poster, posterShape, poste
     const menuOnClick = React.useCallback((event) => {
         event.nativeEvent.selectPrevented = true;
     }, []);
+    const libraryOnClick = React.useCallback((event) => {
+        event.nativeEvent.selectPrevented = true;
+        if (typeof onLibraryClick === 'function') {
+            onLibraryClick(event);
+        }
+    }, [onLibraryClick]);
     const menuOnSelect = React.useCallback((event) => {
         if (typeof optionOnSelect === 'function') {
             optionOnSelect({
@@ -69,6 +75,15 @@ const MetaItem = React.memo(({ className, type, name, poster, posterShape, poste
                         <div title={t('LIBRARY_RESUME_DISMISS')} className={styles['dismiss-icon-layer']} onClick={onDismissClick}>
                             <Icon className={styles['dismiss-icon']} name={'close'} />
                             <div className={styles['dismiss-icon-backdrop']} />
+                        </div>
+                        :
+                        null
+                }
+                {
+                    onLibraryClick ?
+                        <div title={inLibrary ? t('REMOVE_FROM_LIB') : t('ADD_TO_LIB')} className={styles['library-icon-layer']} onClick={libraryOnClick}>
+                            <Icon className={styles['library-icon']} name={inLibrary ? 'remove-from-library' : 'add-to-library'} />
+                            <div className={styles['library-icon-backdrop']} />
                         </div>
                         :
                         null
@@ -174,6 +189,8 @@ MetaItem.propTypes = {
     optionOnSelect: PropTypes.func,
     onDismissClick: PropTypes.func,
     onPlayClick: PropTypes.func,
+    onLibraryClick: PropTypes.func,
+    inLibrary: PropTypes.bool,
     onClick: PropTypes.func,
     watched: PropTypes.bool
 };

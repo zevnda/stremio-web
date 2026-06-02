@@ -862,6 +862,17 @@
   transition: opacity 0.1s ease-in;
   cursor: pointer;
 }
+.meta-item-container-Tj0Ib .poster-container-qkw48 .library-icon-layer-s0CUQ.in-library-Lbeeq {
+  opacity: 1;
+  background-color: var(--primary-accent-color);
+}
+.meta-item-container-Tj0Ib .poster-container-qkw48 .library-icon-layer-s0CUQ.in-library-Lbeeq .library-icon-Hsq3u {
+  color: var(--primary-foreground-color);
+  opacity: 1;
+}
+.meta-item-container-Tj0Ib .poster-container-qkw48 .library-icon-layer-s0CUQ.in-library-Lbeeq .library-icon-backdrop-Wn2pk {
+  display: none;
+}
 .meta-item-container-Tj0Ib .poster-container-qkw48 .library-icon-layer-s0CUQ .library-icon-Hsq3u {
   z-index: 1;
   position: relative;
